@@ -2,108 +2,144 @@ const { expect } = require("chai")
 describe ("Interaction with web element",function () { 
     it("Login Functionality ", function(){
         browser.url('/');
-        wait: 2000;
         const username = $('#user-name');
-        username.setValue('standard_user');
-        wait: 2000;
-        browser.pause("10000");
-        const password = $('#password');
-        password.setValue('secret_sauce');
-        wait: 2000;
-        browser.pause("10000");
-        const Loginbutton = $('#login-button');
-        Loginbutton.click();
-        wait: 2000;
-    })
-    it("Add cart",()=> {
-        it("Add cart",()=>{
-        browser.url('/');
-        wait:2000;
-        const cart = $('#add-to-cart-sauce-labs-bike-light');
-        cart.click();
+        username.waitUntil(function () {
+            return this.setValue('standard_user');
+        }, {
+            timeout: 5000,
+            timeoutMsg: 'expected user name will be entered'
+        });
 
-    })
-    it("Go to cart",()=> {
-        it("Go to cart",()=>{
-        browser.url('/');
-        wait:2000;
-        let heading = $('#header_container');
-        let txt = 'Your Cart';
-        let val = heading.getText();
-        console.log(val.isEqual(txt));
+
+        const password = $('#password');
+        password.waitUntil(function () {
+            return this.setValue('secret_sauce');
+        }, {
+            timeout: 5000,
+            timeoutMsg: 'expected user name will be entered'
+        });
+
+        const Loginbutton = $('#login-button');
+        Loginbutton.waitForClickable({ timeout: 5000 });
+        Loginbutton.click();
+        Loginbutton.waitForClickable({reverse: true });
+
+        const add_cart = $('#add-to-cart-sauce-labs-bike-light');
+        add_cart.waitForClickable({ timeout: 5000 });
+        add_cart.click();
+        add_cart.waitForClickable({reverse: true });
+
+        let heading_cart = $('#header_container');
+        heading_cart.waitUntil(function () {
+        return this.getText() === 'Your Cart'
+        }, {
+        timeout: 5000,
+        timeoutMsg: 'expected text to be same'
+        });
         const cart = $('#shopping_cart_container');
+        cart.waitForClickable({ timeout: 5000 });
         cart.click();
-        wait:2000;
+        cart.waitForClickable({reverse: true });
+
         const cart_check=$('#item_0_title_link');
-        let value = cart_check.getText();
-        if(value == 'Sauce Labs Bike Light');
-            console.log("Pass");
-        wait:2000;
+        cart_check.waitUntil(function () {
+        return this.getText() === 'Sauce Labs Bike Light'
+         }, {
+        timeout: 5000,
+        timeoutMsg: 'expected text to be same'
+         });
+
         const checkout = $('#checkout');
+        checkout.waitForClickable({ timeout: 5000 });
         checkout.click();
-        wait:2000;
-    })
-    it("Deatails of the shiping ", function(){
-        browser.url('/');
-        wait: 2000;
-        let heading = $('#header_container');
-        let txt = 'Checkout: Your Information';
-        let val = heading.getText();
-        console.log(val.isEqual(txt));
+        checkout.waitForClickable({reverse: true });
+
+        const heading_info = $('#header_container');
+        heading_info.waitUntil(function () {
+        return this.getText() === 'Checkout: Your Information'
+            }, {
+            timeout: 5000,
+            timeoutMsg: 'expected text to be same'
+             });
         const First_name = $('#first-name');
-        username.setValue('SAMIAPPAN');
-        wait: 2000;
-        browser.pause("10000");
+        username.waitUntil(function () {
+            return this.setValue('SAMIAPPAN');
+        }, {
+            timeout: 5000,
+            timeoutMsg: 'expected first name will be entered'
+        });
+        
         const Last_name= $('#last-name');
-        password.setValue('J');
-        wait: 2000;
-        browser.pause("10000");
-        const Zip_code $('#postal-code');
-        password.setValue('621212');
-        wait: 2000;
-        const continue= $('#continue');
-        continue.click();
-        wait: 2000;
-    })
-    it("Checkout Overview", function(){
-        browser.url('/');
-        wait: 2000;
-        let heading = $('#header_container');
-        let txt = 'Checkout: Overview';
-        let val = heading.getText();
-        console.log(val.isEqual(txt));
+        password.waitUntil(function () {
+            return this.setValue('J');
+        }, {
+            timeout: 5000,
+            timeoutMsg: 'expected Last name will be entered'
+        });
+        
+        const Zip_code= $('#postal-code');
+        password.waitUntil(function () {
+            return this.setValue('621212');
+        }, {
+            timeout: 5000,
+            timeoutMsg: 'expected Last name will be entered'
+        });
+
+        const contin= $('#continue');
+        contin.waitForClickable({ timeout: 5000 });
+        contin.click();
+        contin.waitForClickable({reverse: true });
+
+        const heading_checkout= $('#header_container');
+        heading_checkout.waitUntil(function () {
+            return this.getText() === 'Checkout: Overview'
+                }, {
+                timeout: 5000,
+                timeoutMsg: 'expected text to be same'
+                 });
+
+                
         const item =$('#item_0_title_link');
-        let value = item.getText();
-        let txt = 'Sauce Labs Bike Light';
-        console.log(value.isEqual(txt));
-        const price = $('#inventory_item_price');
-        let price_check = price.getValue();
-        const payment_info = $('#summary_value_label');
-        console.log(payment_info.getText());
-        const shipping_info = $('#summary_subtotal_label');
-        console.log(shipping_info.getText());
-        const item_total = $('#summary_subtotal_label');
-        let item_tot_check = item_total.getValue();
+        item.waitUntil(function () {
+            return this.getText() === 'Sauce Labs Bike Light'
+                }, {
+                timeout: 5000,
+                timeoutMsg: 'expected text to be same'
+                 });
+
+        const price = await $('#inventory_item_price');
+        let price_check = await price.getValue();
+
+        const payment_info = await $('#summary_value_label');
+        console.log(await payment_info.getText());
+
+        const shipping_info = await $('#summary_subtotal_label');
+        console.log(await shipping_info.getText());
+
+        const item_total = await $('#summary_subtotal_label');
+        let item_tot_check = await item_total.getValue();
         console.log(item_tot_check.isEqual(price_check));
-        const tax = $('#summary_tax_label');
-        let tax_price = tax.getValue();
-        const total = $('#summary_total_label');
-        let tot = total.getValue();
+
+        const tax = await $('#summary_tax_label');
+        let tax_price = await tax.getValue();
+
+        const total = await $('#summary_total_label');
+        let tot = await total.getValue();
         let Final_total = tax_price+item_total;
         console.log(tot.isEqual(Final_total));
-        const finish = $('#finish');
+
+        const finish =  $('#finish');
+        finish.waitForClickable({ timeout: 5000 });
         finish.click();
-    })
-    it("Checkout Complete", function(){
-        browser.url('/');
-        wait: 2000;
-        let heading = $('#header_container');
-        let txt = 'Checkout: Complete';
-        let val = heading.getText();
-        console.log(val.isEqual(txt));
-        const Meaasage =$('#checkout_complete_container');
-        let value = message.getText();
-        let txt = 'THANK YOU FOR YOUR ORDER';
-        console.log(value.isEqual(txt));
-    })
+        finish.waitForClickable({reverse: true });
+
+        const heading_complete = $('#header_container');
+        heading_complete.waitUntil(function () {
+            return this.getText() === 'THANK YOU FOR YOUR ORDER';
+                }, {
+                timeout: 5000,
+                timeoutMsg: 'expected text to be same'
+                 });
+        
+    });
 })
