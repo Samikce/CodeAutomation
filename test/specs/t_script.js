@@ -1,4 +1,4 @@
-const { expect } = require("chai")
+/*const { expect } = require("chai")
 describe ("Interaction with web element",function () { 
     it("Login Functionality ", function(){
         browser.url('/');
@@ -33,7 +33,7 @@ describe ("Interaction with web element",function () {
 
         browser.pause("2000");
 
-        const heading_cart = $('<span />');
+        const heading_cart = $('.title*=Your Cart');
         heading_cart.waitForDisplayed();
         let val = heading_cart.getText();
         let txt = 'Your Cart';
@@ -88,75 +88,26 @@ describe ("Interaction with web element",function () {
         
         browser.pause("2000");
 
-        const heading_checkout = $('<span />');
+        const heading_checkout = $('.title*=Checkout: Your Information');
         heading_checkout.waitForDisplayed();
-        let value_checkout = heading_checkout.getText();
-        let text_checkout = 'Checkout: Your Information';
+        let heading_checkout = heading_checkout.getText();
+        let text_checkout = 'Checkout: Overview';
         console.log(text_checkout == value_checkout);
 
         browser.pause("2000");
                 
-        const item=$('.inventory_item_name*=Sauce Labs Bike Light');
-        item.waitForDisplayed();
-        let value_item = heading_cart.getText();
-        let text_item = 'Sauce Labs Bike Light';
-        console.log(text_item == value_item);
-
-        browser.pause("2000");
-
-        const price = $('.inventory_item_price*=$9.99');
-        price.waitForDisplayed();
-        let price_check = price.getValue();
-
-        browser.pause("2000");
-
-        const payment_info =  $('.summary_value_label*=SauceCard #31337');
-        payment_info.waitForDisplayed();
-        console.log(payment_info.getText());
-
-        browser.pause("2000");
-
-        const ship_info =  $('.summary_value_label*=FREE PONY EXPRESS DELIVERY!');
-        ship_info.waitForDisplayed();
-        console.log(payment_info.getText());
-
-        browser.pause("2000");
-
-        const item_total =  $('.summary_subtotal_label*=9.99');
-        let item_tot_check =  item_total.getValue();
-        console.log(item_tot_check == price_check);
-
-        browser.pause("2000");
-
-        const tax =  $('.summary_tax_label*=0.80');
-        tax.waitForDisplayed();
-        let tax_price =  tax.getValue();
-
-        const total =  $('.summary_total_label*=10.79');
-        total.waitForDisplayed();
-        let tot =  total.getValue();
-        let Final_total = tax_price+item_total;
-        console.log(tot == Final_total);
 
         const finish =  $('#finish');
         finish.waitForClickable();
         finish.click();
 
-        const heading_complete = $('.complete-header*=THANK YOU FOR YOUR ORDER');
+        const heading_complete = $('#header_container');
         heading_complete.waitForDisplayed();
-        let value_complete = heading_complete.getText();
-        let text_complete = 'Checkout: Overview';
-        console.log(text_complete == value_complete);
-
-        browser.pause('3000');
-
-        const back_home = $('#back-to-products');
-        back_home.waitForClickable();
-        back_home.click();
-
-        browser.pause('3000');
+        let heading_checkout = heading_complete.getText();
+        let text_checkout = 'Checkout: Overview';
+        console.log(text_checkout == value_checkout);
                  
         
     });
 
-})
+})*/
