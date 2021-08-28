@@ -10,14 +10,25 @@ on:
     branches: [ master ]
 
 jobs:
-  e2e-test-on-ubuntu-with-local-chrome:
+  test:
     runs-on: ubuntu-latest
-    #runs-on: macos-latest
-    #runs-on: windows-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Setup
         run: npm install
       - name: Test
-        run: npm test
+        # 1. issue with chromedriver
+        #run: ENV_PATH=environment/QS npm run clear-test -- "wdio-configs/wdio.conf.chrome.chromedriver.js --cucumberOpts.tagExpression=@example"
+        # 2. issue with wdio docker service
+        run: ENV_PATH=environment/QS npm run clear-test -- "wdio-configs/wdio.conf.chrome.docker.debug.js --cucumberOpts.tagExpression=@example"
+      - name: Upload Test Reports
+        uses: actions/upload-artifact@v2
+        with:
+          name: reports
+          path: tests/reports/
+      - name: Upload Logs
+        uses: actions/upload-artifact@v2
+        with:
+          name: logs
+          path: log/
