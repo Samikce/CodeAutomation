@@ -10,25 +10,20 @@ on:
     branches: [ master ]
 
 jobs:
-  test:
+  linux:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x, 14.x, 16.x]
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Setup
-        run: npm install
-      - name: Test
-        # 1. issue with chromedriver
-        #run: ENV_PATH=environment/QS npm run clear-test -- "wdio-configs/wdio.conf.chrome.chromedriver.js --cucumberOpts.tagExpression=@example"
-        # 2. issue with wdio docker service
-        run: ENV_PATH=environment/QS npm run clear-test -- "wdio-configs/wdio.conf.chrome.docker.debug.js --cucumberOpts.tagExpression=@example"
-      - name: Upload Test Reports
-        uses: actions/upload-artifact@v2
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
         with:
-          name: reports
-          path: tests/reports/
-      - name: Upload Logs
-        uses: actions/upload-artifact@v2
-        with:
-          name: logs
-          path: log/
+          node-version: ${{ matrix.node-version }}
+      - name: Install Dependencies
+        run: npm ci
+      - name: Bootstrap Packages
+        run: npm run setup-full
+      - name: Dependency Check
+        if: ${{ matrix.node-version == '14.x' }}
+        run: npm run test:depcheck
