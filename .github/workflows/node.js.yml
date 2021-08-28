@@ -23,5 +23,4 @@ jobs:
       - name: Install Dependencies
         run: npm i
       - name: Dependency Check
-        if: ${{ matrix.node-version == '12.x' }}
         run: npm test
