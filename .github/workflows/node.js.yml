@@ -11,10 +11,9 @@ on:
 
 jobs:
   e2e-Test:
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        os: [windows-latest, ubuntu-latest]
         node-version: [12.x, 14.x]
     steps:
       - name: Install Chromium
