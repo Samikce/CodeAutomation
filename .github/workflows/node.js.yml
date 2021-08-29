@@ -10,8 +10,8 @@ on:
     branches: [ master ]
 
 jobs:
-  linux:
-    runs-on: ubuntu-latest
+  windows:
+    runs-on: windows-latest
     strategy:
       matrix:
         node-version: [12.x, 14.x]
